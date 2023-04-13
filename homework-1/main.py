@@ -3,10 +3,12 @@ import csv
 import os
 import psycopg2
 
+"""Задаем переменные для списков, в которые будем складывать строки из csv файлов"""
 customers = []
 employees = []
 orders = []
 
+"""складываем в циклах строки в списки"""
 with open('north_data/customers_data.csv', 'r') as f:
     data = csv.DictReader(f)
     for i in data:
@@ -22,9 +24,11 @@ with open('north_data/orders_data.csv', 'r') as f:
     for i in data:
         orders.append(i)
 
+"""задаем переменные для соединения с базой данных"""
 my_password = os.environ.get('PASSWORD_POSTGRESQL')
 conn = psycopg2.connect(host="localhost", database="north", user="postgres", password=my_password)
 
+"""заносим данные в базу данных"""
 try:
     with conn:
         with conn.cursor() as cur:
